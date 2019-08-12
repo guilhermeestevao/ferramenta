@@ -3,13 +3,28 @@ import { Upload, Icon } from 'antd';
 const { Dragger } = Upload;
 import 'antd/dist/antd.css';
 
+const uploadHandler = file => {
+
+}
+
 
 const upload = () =>{
 
     const props = {
         name: 'file',
         multiple: false,
-        action: '/',
+        action: uploadHandler,
+        customRequest: ({ file, 
+          onSuccess }) => {
+          var reader = new FileReader();
+      
+          reader.onload = function(e) {
+            console.log(e.target.result);
+            onSuccess("ok");
+          };
+      
+          reader.readAsText(file);
+        },
         onChange(info) {
           const { file } = info;
           const status = file.status;
